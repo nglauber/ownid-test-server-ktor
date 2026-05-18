@@ -104,26 +104,22 @@
 
     // [MÉTODO 2] Comunicação via TWA (postMessage) - Mensagem Fixa
     function onSendMessage() {
-        // Forma 1: Envia para quem abriu a janela (Muito comum em fluxos de Custom Tabs/TWA)
-        if (window.location.origin) {
-            const mensagemFixa = "Disparado via TWA postMessage 1";
-            window.postMessage(mensagemFixa, window.location.origin);
+        const mensagemFixa = "Disparado via TWA postMessage";
 
-            console.log("Enviado via window.location.origin.");
+        // 1. Envia usando o seletor universal "*" (Evita bloqueio por divergência de protocolo/porta)
+        window.postMessage(mensagemFixa, "*");
+        console.log("Tentativa 1: Enviado via window.postMessage padrão com '*'.");
 
-        } else if (window.opener) {
-            const mensagemFixa = "Disparado via TWA postMessage 2";
+        // 2. Se a página foi aberta como um popup ou aba derivada, avisa quem a abriu
+        if (window.opener) {
             window.opener.postMessage(mensagemFixa, "*");
-            console.log("Enviado via window.opener");
+            console.log("Tentativa 2: Enviado via window.opener.");
+        }
 
-        } else {
-            const mensagemFixa = "Disparado via TWA postMessage 3";
-            // Forma 2: Envia para o próprio window (O padrão que o Chrome do TWA escuta)
-            window.postMessage(mensagemFixa, "*");
-            console.log("Enviado via window.postMessage padrão");
-
-            // Nota: Mudamos o segundo parâmetro para "*" para evitar que qualquer divergência
-            // de porta ou protocolo (http vs https) bloqueie a mensagem no teste.
+        // 3. Envia especificando a origem exata (Boa prática de produção)
+        if (window.location && window.location.origin) {
+            window.postMessage(mensagemFixa, window.location.origin);
+            console.log("Tentativa 3: Enviado via window.postMessage com origin estrito.");
         }
     }
 </script>
