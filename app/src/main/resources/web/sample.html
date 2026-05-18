@@ -81,6 +81,7 @@
         if (typeof window.UnicoSDKSInterface !== 'undefined' && window.UnicoSDKSInterface !== null) {
             statusDiv.innerText = "Status: Modo WebView Detectado";
             statusDiv.style.color = "#28a745";
+            window.UnicoSDKSInterface.onReady();
         } else {
             statusDiv.innerText = "Status: Modo TWA / Navegador Comum";
             statusDiv.style.color = "#007bff";
