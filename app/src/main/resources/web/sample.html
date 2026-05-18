@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo com UnicoSDKSInterface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(180deg, #1a531a 0%, #000000 100%);
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 300px;
+        }
+        .btn {
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background 0.2s;
+            width: 100%;
+        }
+        .btn-green {
+            background-color: #28a745;
+        }
+        .btn-green:hover {
+            background-color: #218838;
+        }
+        .btn-blue {
+            background-color: #007bff;
+        }
+        .btn-blue:hover {
+            background-color: #0056b3;
+        }
+        .input-text {
+            padding: 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        .status-text {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #d1d1d1;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <!-- Botão 1: Chamada Nativa Padrão -->
+    <button class="btn btn-green" onclick="onNativeCall()">Chamar Nativo</button>
+
+    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); margin: 10px 0;">
+
+    <!-- Campo para digitar uma mensagem personalizada -->
+    <input type="text" id="messageInput" class="input-text" placeholder="Digite uma mensagem para o App...">
+
+    <!-- Botão 2: O novo botão para mandar a mensagem digitada -->
+    <button class="btn btn-blue" onclick="onSendMessage()">Enviar Mensagem</button>
+
+    <div id="status" class="status-text">Aguardando carregamento...</div>
+</div>
+
+<script>
+    // Função executada ao carregar a página
+    function onReady() {
+        const statusDiv = document.getElementById("status");
+        if (!statusDiv) return;
+
+        if (typeof window.UnicoSDKSInterface !== 'undefined' && window.UnicoSDKSInterface !== null) {
+            statusDiv.innerText = "Status: Conectado ao App Android";
+            statusDiv.style.color = "#28a745";
+        } else {
+            statusDiv.innerText = "Status: Sem interface nativa";
+        }
+    }
+
+    // Inicialização resiliente para WebViews
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", onReady);
+    } else {
+        onReady();
+    }
+
+    // Função do Botão 1 (Ação simples)
+    function onNativeCall() {
+        if (typeof window.UnicoSDKSInterface !== 'undefined' && window.UnicoSDKSInterface !== null) {
+            window.UnicoSDKSInterface.nomeDoMetodoNoKotlin("Ação padrão disparada pelo botão verde.");
+        } else {
+            alert("Interface nativa não encontrada.");
+        }
+    }
+
+    // Função do Botão 2 (Captura o input e envia para o Android)
+    function onSendMessage() {
+        if (typeof window.UnicoSDKSInterface !== 'undefined' && window.UnicoSDKSInterface !== null) {
+            const inputElement = document.getElementById("messageInput");
+            const textoParaEnviar = inputElement.value.trim();
+
+            if (textoParaEnviar === "") {
+                alert("Por favor, digite alguma mensagem antes de enviar!");
+                return;
+            }
+
+            // Envia o valor do input para o método anotado com @JavascriptInterface no Kotlin
+            window.UnicoSDKSInterface.nomeDoMetodoNoKotlin(textoParaEnviar);
+
+            // Limpa o campo após o envio
+            inputElement.value = "";
+        } else {
+            alert("Interface nativa não encontrada.");
+        }
+    }
+</script>
+
+</body>
+</html>

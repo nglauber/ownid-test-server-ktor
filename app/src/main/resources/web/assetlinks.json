@@ -1,0 +1,146 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.use_as_origin"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.acesso.acessobio",
+      "sha256_cert_fingerprints": [
+        "C1:B3:12:87:71:29:5A:94:64:FD:A7:38:FC:97:5E:A0:93:48:2E:94:F0:3B:A4:C0:E9:6D:C3:9C:1B:74:00:B4"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.acesso.acessobio",
+      "sha256_cert_fingerprints": [
+        "C1:B3:12:87:71:29:5A:94:64:FD:A7:38:FC:97:5E:A0:93:48:2E:94:F0:3B:A4:C0:E9:6D:C3:9C:1B:74:00:B4"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.use_as_origin"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.acesso.acessobio",
+      "sha256_cert_fingerprints": [
+        "C1:B3:12:87:71:29:5A:94:64:FD:A7:38:FC:97:5E:A0:93:48:2E:94:F0:3B:A4:C0:E9:6D:C3:9C:1B:74:00:B4"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.acesso.acessobio",
+      "sha256_cert_fingerprints": [
+        "C1:B3:12:87:71:29:5A:94:64:FD:A7:38:FC:97:5E:A0:93:48:2E:94:F0:3B:A4:C0:E9:6D:C3:9C:1B:74:00:B4"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.use_as_origin"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.unico.test.e2e",
+      "sha256_cert_fingerprints": [
+        "00:77:82:4F:9C:1B:8A:EF:D2:FF:0A:71:38:0A:03:C5:A0:7F:2B:DB:7B:CC:62:45:76:5C:B5:5D:AA:DC:4F:C1"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.unico.test.e2e",
+      "sha256_cert_fingerprints": [
+        "00:77:82:4F:9C:1B:8A:EF:D2:FF:0A:71:38:0A:03:C5:A0:7F:2B:DB:7B:CC:62:45:76:5C:B5:5D:AA:DC:4F:C1"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.use_as_origin"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.unico.check.e2e",
+      "sha256_cert_fingerprints": [
+        "D2:0B:7B:D2:FC:F5:DC:67:C5:45:13:F6:AB:F5:31:9B:29:80:CF:71:07:95:B2:63:C7:42:23:AF:08:54:ED:B8"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.unico.check.e2e",
+      "sha256_cert_fingerprints": [
+        "D2:0B:7B:D2:FC:F5:DC:67:C5:45:13:F6:AB:F5:31:9B:29:80:CF:71:07:95:B2:63:C7:42:23:AF:08:54:ED:B8"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.use_as_origin"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.unico.test.e2e",
+      "sha256_cert_fingerprints": [
+        "23:2F:44:C4:5B:33:91:0B:5A:F8:3A:4E:80:6D:E1:EA:D0:92:9B:55:72:9C:BF:F8:7E:C9:12:FC:A2:FC:DA:EE"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.unico.test.e2e",
+      "sha256_cert_fingerprints": [
+        "23:2F:44:C4:5B:33:91:0B:5A:F8:3A:4E:80:6D:E1:EA:D0:92:9B:55:72:9C:BF:F8:7E:C9:12:FC:A2:FC:DA:EE"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.use_as_origin"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.unico.check.e2e",
+      "sha256_cert_fingerprints": [
+        "D2:0B:7B:D2:FC:F5:DC:67:C5:45:13:F6:AB:F5:31:9B:29:80:CF:71:07:95:B2:63:C7:42:23:AF:08:54:ED:B8"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.unico.check.e2e",
+      "sha256_cert_fingerprints": [
+        "D2:0B:7B:D2:FC:F5:DC:67:C5:45:13:F6:AB:F5:31:9B:29:80:CF:71:07:95:B2:63:C7:42:23:AF:08:54:ED:B8"
+      ]
+    }
+  }
+]
