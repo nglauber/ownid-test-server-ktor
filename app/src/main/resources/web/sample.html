@@ -103,23 +103,23 @@
     }
 
     // [MÉTODO 2] Comunicação via TWA (postMessage) - Mensagem Fixa
-    function onSendMessage() {
-        const mensagemFixa = "Disparado via TWA postMessage";
+    let androidPort = null;
 
-        // 1. Envia usando o seletor universal "*" (Evita bloqueio por divergência de protocolo/porta)
-        window.postMessage(mensagemFixa, "*");
-        console.log("Tentativa 1: Enviado via window.postMessage padrão com '*'.");
-
-        // 2. Se a página foi aberta como um popup ou aba derivada, avisa quem a abriu
-        if (window.opener) {
-            window.opener.postMessage(mensagemFixa, "*");
-            console.log("Tentativa 2: Enviado via window.opener.");
+    // Recebe a porta que o Android entrega via postMessage inicial
+    window.addEventListener('message', function(event) {
+        if (event.ports && event.ports.length > 0) {
+            androidPort = event.ports[0];
+            document.getElementById('status').innerText = "Status: Canal TWA pronto";
+            document.getElementById('status').style.color = "#28a745";
         }
+    });
 
-        // 3. Envia especificando a origem exata (Boa prática de produção)
-        if (window.location && window.location.origin) {
-            window.postMessage(mensagemFixa, window.location.origin);
-            console.log("Tentativa 3: Enviado via window.postMessage com origin estrito.");
+    function onSendMessage() {
+        if (androidPort) {
+            androidPort.postMessage("Disparado via TWA postMessage");
+        } else {
+            document.getElementById('status').innerText = "Porta ainda não recebida";
+            document.getElementById('status').style.color = "#ff4444";
         }
     }
 </script>
