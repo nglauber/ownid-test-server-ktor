@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exemplo com UnicoSDKSInterface</title>
+    <title>Exemplo WebView e TWA</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,7 +24,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            width: 300px;
+            width: 310px;
         }
         .btn {
             padding: 15px;
@@ -50,15 +50,6 @@
         .btn-blue:hover {
             background-color: #0056b3;
         }
-        .input-text {
-            padding: 12px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            outline: none;
-            box-sizing: border-box;
-            width: 100%;
-        }
         .status-text {
             margin-top: 10px;
             font-size: 14px;
@@ -70,16 +61,13 @@
 <body>
 
 <div class="card">
-    <!-- Botão 1: Chamada Nativa Padrão -->
-    <button class="btn btn-green" onclick="onNativeCall()">Chamar Nativo</button>
+    <!-- BOTÃO 1: Formato WebView Tradicional -->
+    <button class="btn btn-green" onclick="onNativeCall()">Chamar via WebView Bridge</button>
 
     <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); margin: 10px 0;">
 
-    <!-- Campo para digitar uma mensagem personalizada -->
-    <input type="text" id="messageInput" class="input-text" placeholder="Digite uma mensagem para o App...">
-
-    <!-- Botão 2: O novo botão para mandar a mensagem digitada -->
-    <button class="btn btn-blue" onclick="onSendMessage()">Enviar Mensagem</button>
+    <!-- BOTÃO 2: Formato TWA / Custom Tabs (postMessage) com mensagem fixa -->
+    <button class="btn btn-blue" onclick="onSendMessage()">Enviar via TWA (postMessage)</button>
 
     <div id="status" class="status-text">Aguardando carregamento...</div>
 </div>
@@ -91,48 +79,38 @@
         if (!statusDiv) return;
 
         if (typeof window.UnicoSDKSInterface !== 'undefined' && window.UnicoSDKSInterface !== null) {
-            statusDiv.innerText = "Status: Conectado ao App Android";
+            statusDiv.innerText = "Status: Modo WebView Detectado";
             statusDiv.style.color = "#28a745";
         } else {
-            statusDiv.innerText = "Status: Sem interface nativa";
+            statusDiv.innerText = "Status: Modo TWA / Navegador Comum";
+            statusDiv.style.color = "#007bff";
         }
     }
 
-    // Inicialização resiliente para WebViews
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", onReady);
     } else {
         onReady();
     }
 
-    // Função do Botão 1 (Ação simples)
+    // [MÉTODO 1] Comunicação via WebView Bridge
     function onNativeCall() {
         if (typeof window.UnicoSDKSInterface !== 'undefined' && window.UnicoSDKSInterface !== null) {
-            window.UnicoSDKSInterface.nomeDoMetodoNoKotlin("Ação padrão disparada pelo botão verde.");
+            window.UnicoSDKSInterface.nomeDoMetodoNoKotlin("Chamada via interface injetada do WebView");
         } else {
-            alert("Interface nativa não encontrada.");
+            alert("Interface do WebView não encontrada.");
         }
     }
 
-    // Função do Botão 2 (Captura o input e envia para o Android)
+    // [MÉTODO 2] Comunicação via TWA (postMessage) - Mensagem Fixa
     function onSendMessage() {
-        if (typeof window.UnicoSDKSInterface !== 'undefined' && window.UnicoSDKSInterface !== null) {
-            const inputElement = document.getElementById("messageInput");
-            const textoParaEnviar = inputElement.value.trim();
+        // Definição da mensagem fixa que o app Android vai receber
+        const mensagemFixa = "Disparado via TWA postMessage";
 
-            if (textoParaEnviar === "") {
-                alert("Por favor, digite alguma mensagem antes de enviar!");
-                return;
-            }
+        const targetOrigin = window.location.origin;
+        window.postMessage(mensagemFixa, targetOrigin);
 
-            // Envia o valor do input para o método anotado com @JavascriptInterface no Kotlin
-            window.UnicoSDKSInterface.nomeDoMetodoNoKotlin(textoParaEnviar);
-
-            // Limpa o campo após o envio
-            inputElement.value = "";
-        } else {
-            alert("Interface nativa não encontrada.");
-        }
+        console.log("postMessage disparado com texto fixo.");
     }
 </script>
 
