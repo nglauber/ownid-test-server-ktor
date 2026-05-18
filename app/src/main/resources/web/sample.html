@@ -112,6 +112,23 @@
 
         console.log("postMessage disparado com texto fixo.");
     }
+
+    function onSendMessage() {
+        const mensagemFixa = "Disparado via TWA postMessage";
+
+        // Forma 1: Envia para quem abriu a janela (Muito comum em fluxos de Custom Tabs/TWA)
+        if (window.opener) {
+            window.opener.postMessage(mensagemFixa, "*");
+            console.log("Enviado via window.opener");
+        } else {
+            // Forma 2: Envia para o próprio window (O padrão que o Chrome do TWA escuta)
+            window.postMessage(mensagemFixa, "*");
+            console.log("Enviado via window.postMessage padrão");
+
+            // Nota: Mudamos o segundo parâmetro para "*" para evitar que qualquer divergência
+            // de porta ou protocolo (http vs https) bloqueie a mensagem no teste.
+        }
+    }
 </script>
 
 </body>
