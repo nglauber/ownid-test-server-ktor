@@ -104,23 +104,20 @@
 
     // [MÉTODO 2] Comunicação via TWA (postMessage) - Mensagem Fixa
     function onSendMessage() {
-        // Definição da mensagem fixa que o app Android vai receber
-        const mensagemFixa = "Disparado via TWA postMessage";
-
-        const targetOrigin = window.location.origin;
-        window.postMessage(mensagemFixa, targetOrigin);
-
-        console.log("postMessage disparado com texto fixo.");
-    }
-
-    function onSendMessage() {
-        const mensagemFixa = "Disparado via TWA postMessage";
-
         // Forma 1: Envia para quem abriu a janela (Muito comum em fluxos de Custom Tabs/TWA)
-        if (window.opener) {
+        if (window.location.origin) {
+            const mensagemFixa = "Disparado via TWA postMessage 1";
+            window.postMessage(mensagemFixa, window.location.origin);
+
+            console.log("Enviado via window.location.origin.");
+
+        } else if (window.opener) {
+            const mensagemFixa = "Disparado via TWA postMessage 2";
             window.opener.postMessage(mensagemFixa, "*");
             console.log("Enviado via window.opener");
+
         } else {
+            const mensagemFixa = "Disparado via TWA postMessage 3";
             // Forma 2: Envia para o próprio window (O padrão que o Chrome do TWA escuta)
             window.postMessage(mensagemFixa, "*");
             console.log("Enviado via window.postMessage padrão");
