@@ -1,0 +1,172 @@
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Native Capture Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(180deg, #1a531a 0%, #000000 100%);
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 310px;
+        }
+        .btn {
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background 0.2s;
+            width: 100%;
+        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-green  { background-color: #28a745; }
+        .btn-green:hover:not(:disabled)  { background-color: #218838; }
+        .btn-blue   { background-color: #007bff; }
+        .btn-blue:hover:not(:disabled)   { background-color: #0056b3; }
+        .status-text {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #d1d1d1;
+            text-align: center;
+        }
+        #jwt-box {
+            display: none;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 11px;
+            color: #a8f0a8;
+            word-break: break-all;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <button class="btn btn-green" id="btn-webview" onclick="onNativeCaptureWebView()">
+        Captura Nativa (WebView)
+    </button>
+
+    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); margin: 5px 0;">
+
+    <button class="btn btn-blue" id="btn-twa" onclick="onNativeCaptureTwa()">
+        Captura Nativa (TWA)
+    </button>
+
+    <div id="status" class="status-text">Aguardando carregamento...</div>
+    <div id="jwt-box"></div>
+</div>
+
+<script>
+    var androidPort = null;
+
+    // Chama onReady assim que a página terminar de carregar
+    function onPageReady() {
+        if (typeof window.UnicoSDKSInterface !== 'undefined' && window.UnicoSDKSInterface !== null) {
+            window.UnicoSDKSInterface.onReady();
+        }
+        setStatus("Pronto.", "#d1d1d1");
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", onPageReady);
+    } else {
+        onPageReady();
+    }
+
+    // Recebe porta TWA e resultados de captura via postMessage
+    window.addEventListener('message', function(event) {
+        if (event.ports && event.ports.length > 0) {
+            androidPort = event.ports[0];
+            androidPort.onmessage = function(e) {
+                handleAndroidMessage(e.data);
+            };
+        }
+        if (typeof event.data === 'string' && event.data) {
+            handleAndroidMessage(event.data);
+        }
+    });
+
+    function handleAndroidMessage(raw) {
+        try {
+            var msg = JSON.parse(raw);
+            if (msg.action === 'NATIVE_CAPTURE_SUCCESS') {
+                showJwt(msg.data);
+                enableButtons();
+            }
+        } catch (e) { /* mensagem não-JSON — ignora */ }
+    }
+
+    // Retorno de captura nativa no modo WebView
+    window.onNativeCaptureResult = function(jwt) {
+        showJwt(jwt);
+        enableButtons();
+    };
+
+    function onNativeCaptureWebView() {
+        if (typeof window.UnicoSDKSInterface === 'undefined' || window.UnicoSDKSInterface === null) {
+            setStatus("UnicoSDKSInterface não disponível.", "#ff4444");
+            return;
+        }
+        disableButtons();
+        setStatus("Aguardando captura...", "#e6a817");
+        window.UnicoSDKSInterface.requestNativeCapture(JSON.stringify({ source: 'native-capture-test' }));
+    }
+
+    function onNativeCaptureTwa() {
+        if (!androidPort) {
+            setStatus("Canal TWA não pronto.", "#ff4444");
+            return;
+        }
+        disableButtons();
+        setStatus("Aguardando captura...", "#e6a817");
+        androidPort.postMessage(JSON.stringify({ action: 'REQUEST_NATIVE_CAPTURE', data: { source: 'native-capture-test' } }));
+    }
+
+    function showJwt(jwt) {
+        setStatus("JWT recebido com sucesso!", "#28a745");
+        var box = document.getElementById('jwt-box');
+        box.innerText = jwt;
+        box.style.display = 'block';
+    }
+
+    function setStatus(msg, color) {
+        var el = document.getElementById('status');
+        el.innerText = msg;
+        el.style.color = color || '#d1d1d1';
+    }
+
+    function disableButtons() {
+        document.getElementById('btn-webview').disabled = true;
+        document.getElementById('btn-twa').disabled = true;
+    }
+
+    function enableButtons() {
+        document.getElementById('btn-webview').disabled = false;
+        document.getElementById('btn-twa').disabled = false;
+    }
+</script>
+
+</body>
+</html>
