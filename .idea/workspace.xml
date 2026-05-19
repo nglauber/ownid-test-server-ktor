@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="765500ca-6c37-41f0-ba87-2738a98c5f06" name="Changes" comment="Initial commit">
+    <list default="true" id="765500ca-6c37-41f0-ba87-2738a98c5f06" name="Changes" comment="Invoking onReady when the page is loaded">
+      <change afterPath="$PROJECT_DIR$/app/src/main/resources/web/sample2.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/resources/web/sample.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/resources/web/sample.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +124,7 @@
       <workItem from="1758742073264" duration="1074000" />
       <workItem from="1758743156100" duration="1225000" />
       <workItem from="1758745981165" duration="650000" />
-      <workItem from="1779111753333" duration="7341000" />
+      <workItem from="1779111753333" duration="15808000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <option name="closed" value="true" />
@@ -134,7 +134,55 @@
       <option name="project" value="LOCAL" />
       <updated>1779119641207</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Fix TWA message">
+      <option name="closed" value="true" />
+      <created>1779123721961</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1779123721961</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fix TWA message 2">
+      <option name="closed" value="true" />
+      <created>1779126198049</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1779126198049</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Fix TWA message 3">
+      <option name="closed" value="true" />
+      <created>1779127580725</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1779127580725</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Fix TWA message 4">
+      <option name="closed" value="true" />
+      <created>1779128712987</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1779128712987</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fix TWA message 5">
+      <option name="closed" value="true" />
+      <created>1779130796805</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1779130796805</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Invoking onReady when the page is loaded">
+      <option name="closed" value="true" />
+      <created>1779134984053</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1779134984053</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,6 +190,12 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial commit" />
+    <MESSAGE value="Fix TWA message" />
+    <MESSAGE value="Fix TWA message 2" />
+    <MESSAGE value="Fix TWA message 3" />
+    <MESSAGE value="Fix TWA message 4" />
+    <MESSAGE value="Fix TWA message 5" />
+    <MESSAGE value="Invoking onReady when the page is loaded" />
+    <option name="LAST_COMMIT_MESSAGE" value="Invoking onReady when the page is loaded" />
   </component>
 </project>

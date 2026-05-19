@@ -50,8 +50,10 @@ fun Application.module() {
 
     routing {
         staticResources("/static", "web", index = "sample.html")
+        staticResources("/static", "web", index = "sample2.html")
 
         resource(remotePath = "/sample", resource = "web/sample.html")
+        resource(remotePath = "/sample2", resource = "web/sample2.html")
 
         resource(remotePath = "/.well-known/assetlinks.json", resource = "web/assetlinks.json")
 
