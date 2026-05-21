@@ -113,7 +113,7 @@
                 showJwt(msg.data);
                 enableButtons();
             } else if (msg.action === 'NATIVE_CAPTURE_ERROR') {
-                setStatus("Erro na captura: " + msg.data, "#ff4444");
+                setStatus("Erro " + msg.data.code + ": " + msg.data.message, "#ff4444");
                 enableButtons();
             }
         } catch (e) {
@@ -126,8 +126,8 @@
         enableButtons();
     };
 
-    window.onNativeCaptureError = function(errorCode) {
-        setStatus("Erro na captura: " + errorCode, "#ff4444");
+    window.onNativeCaptureError = function(error) {
+        setStatus("Erro " + error.code + ": " + error.message, "#ff4444");
         enableButtons();
     };
 
