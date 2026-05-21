@@ -116,7 +116,9 @@
                 setStatus("Erro na captura: " + msg.data, "#ff4444");
                 enableButtons();
             }
-        } catch (e) { /* mensagem não-JSON — ignora */ }
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     window.onNativeCaptureResult = function(jwt) {
