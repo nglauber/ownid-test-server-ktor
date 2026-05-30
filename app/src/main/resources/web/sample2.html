@@ -111,38 +111,43 @@
     function handleAndroidMessage(event) {
         let msg;
         try {
-            msg = JSON.parse(event.data);
-
-            if (msg.action === 'NATIVE_CAPTURE_CHUNK') {
-                jwtChunks[msg.index] = msg.data;
-                if (jwtChunks.filter(Boolean).length === msg.total) {
-                    const jwt = jwtChunks.join('');
-                    jwtChunks = [];
-                    showJwt(jwt);
-                }
-                return;
-            }
-
-            if (msg.action === 'NATIVE_CAPTURE_SUCCESS') {
-                jwtChunks = [];
-                enableButtons();
-                showJwt(msg.data);
-                return;
-            }
-
-            if (msg.action === 'NATIVE_CAPTURE_ERROR') {
-                setStatus("Erro " + msg.data.code + ": " + msg.data.message, "#ff4444");
-                enableButtons();
-            }
+            msg = JSON.parse(event); // ← era event.data (bug)
         } catch (e) {
-            console.log(e)
+            console.log(e);
+            return;
+        }
+
+        if (msg.action === 'NATIVE_CAPTURE_CHUNK') {
+            jwtChunks[msg.index] = msg.data;
+            if (jwtChunks.filter(Boolean).length === msg.total) {
+                const jwt = jwtChunks.join('');
+                jwtChunks = [];
+                showJwt(jwt);
+                setStatus("JWT recebido (chunks).", "#28a745");
+                enableButtons();
+            }
+            return;
+        }
+
+        if (msg.action === 'NATIVE_CAPTURE_SUCCESS') {
+            jwtChunks = [];
+            showJwt(msg.data);
+            setStatus("JWT recebido.", "#28a745");
+            enableButtons();
+            return;
+        }
+
+        if (msg.action === 'NATIVE_CAPTURE_ERROR') {
+            setStatus("Erro " + msg.data.code + ": " + msg.data.message, "#ff4444");
+            enableButtons();
         }
     }
 
-    window.onNativeCaptureResult = function(jwt) {
-        showJwt(jwt);
-        enableButtons();
-    };
+    function showJwt(jwt) {
+        var box = document.getElementById('jwt-box');
+        box.style.display = 'block';
+        box.innerText = jwt.substring(0, 200) + '...';
+    }
 
     window.onNativeCaptureError = function(error) {
         setStatus("Erro " + error.code + ": " + error.message, "#ff4444");
@@ -167,10 +172,6 @@
         disableButtons();
         setStatus("Aguardando captura...", "#e6a817");
         androidPort.postMessage(JSON.stringify({ action: 'REQUEST_NATIVE_CAPTURE', data: { source: 'native-capture-test' } }));
-    }
-
-    function showJwt(jwt) {
-        box.innerText = jwt.substring(0, 200) + '...';
     }
 
     function setStatus(msg, color) {
