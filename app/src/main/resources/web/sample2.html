@@ -153,10 +153,14 @@
 
     function showJwt(jwt) {
         setStatus("JWT recebido com sucesso!", "#28a745");
-        var box = document.getElementById('jwt-box');
-        box.innerText = jwt;
+        const box = document.getElementById('jwt-box');
+        const preview = jwt.length > 128
+            ? jwt.substring(0, 64) + '...' + jwt.substring(jwt.length - 64)
+            : jwt;
+        box.innerText = preview;
         box.style.display = 'block';
     }
+
 
     function setStatus(msg, color) {
         var el = document.getElementById('status');
